@@ -1,0 +1,12 @@
+.navbar {
+  user-select: none;
+  cursor: pointer;
+  &-brand {
+    color: white;
+  }
+  &-nav {
+    & .nav-link {
+      color: white;
+    }
+  }
+}

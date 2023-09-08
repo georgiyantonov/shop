@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-dark a{
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+.bg-dark a:hover{
+  opacity: .7;
+  transition: opacity .3s ease-in;
+}
