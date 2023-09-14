@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthForm from '../components/AuthForm/AuthForm'
+import { AuthForm }from '../components/AuthForm/AuthForm'
 import Container from 'react-bootstrap/esm/Container'
 
 export default function Auth() {

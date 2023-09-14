@@ -10,6 +10,14 @@ export default class DeviceStore {
       {
         id: 2,
         name: "Планшеты"
+      },
+      {
+        id: 3,
+        name: "Смарт-часы"
+      },
+      {
+        id: 4,
+        name: "Наушники"
       }
     ]
 
@@ -21,6 +29,14 @@ export default class DeviceStore {
       {
         id: 2,
         name: "Samsung"
+      },
+      {
+        id: 3,
+        name: "Huawei"
+      },
+      {
+        id: 4,
+        name: "Xiaomi"
       }
     ]
 
@@ -31,6 +47,9 @@ export default class DeviceStore {
       {id: 4, name: 'Samsung Galaxy S23 Ultra', price: 159000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/b00/b009d462d6a809b854dacdfdbc0aaf8a.jpg/resize/453x480/'},
       {id: 5, name: 'Samsung Galaxy Z Fold4', price: 130000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/f87/f87293f2b786e9cc91a9c71e5dffc07a.jpg/resize/453x480/'}
     ]
+
+    this._selectedType = {}
+    this._selectedBrand = {}
     makeAutoObservable(this)
   }
 
@@ -43,6 +62,12 @@ export default class DeviceStore {
   setDevices(devices) {
     this._devices = devices
   }
+  setSelectedType(type) {
+    this._selectedType = type
+  }
+  setSelectedBrand(brand) {
+    this._selectedBrand = brand
+  }
 
   get types() {
     return this._types
@@ -52,5 +77,11 @@ export default class DeviceStore {
   }
   get devices() {
     return this._devices
+  }
+  get selectedType() {
+    return this._selectedType
+  }
+  get selectedBrand() {
+    return this._selectedBrand
   }
 }

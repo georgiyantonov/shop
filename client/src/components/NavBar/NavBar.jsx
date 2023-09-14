@@ -3,15 +3,21 @@ import { Context } from '../..'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { AUTH_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 import './style.scss'
 import {observer} from 'mobx-react-lite'
-import { Link } from "react-router-dom";
-import { Button } from 'react-bootstrap';
+import { Link, useNavigate } from "react-router-dom";
+
 
 export const NavBar = observer(() => {
   const {user} = useContext(Context)
+  const nav = useNavigate()
 
+  const logOut = () => {
+    localStorage.removeItem('token')
+    user.setUser({})
+    user.setIsAuth(false)
+  }
   return (
     <Navbar bg="dark" data-bs-theme="dark">
         <Container>
@@ -22,9 +28,9 @@ export const NavBar = observer(() => {
           </Navbar.Brand>
           {user.isAuth ?
             <Nav className="ml-auto gap-2">
-              {user.isAdmin && <Link Link variant={"outline-light"}>Admin</Link>}
-              <Link>Корзина</Link>
-              <Link onClick={() => user.setIsAuth(false)}>Выйти</Link>
+              <Link to={ADMIN_ROUTE}>Admin</Link>
+              <Link to={BASKET_ROUTE}>Корзина</Link>
+              <Link onClick={() => logOut()}>Выйти</Link>
             </Nav>
             :
             <Nav className="ml-auto">
