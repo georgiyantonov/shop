@@ -1,11 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
+import create from "../../fetch/create/create";
 
 export const CreateBrand = ({show, onHide}) => {
+  const [brand, setBrand] = useState('')
+  const cancel = () => {
+    setBrand('')
+    onHide()
+  }
+  
   return (
     <Modal
       show={show}
-      onHide={onHide}
+      onHide={cancel}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -19,12 +26,17 @@ export const CreateBrand = ({show, onHide}) => {
         <Form>
           <Form.Control
             placeholder='Введите название бренда'
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
           />
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='outline-danger' onClick={onHide}>Отмена</Button>
-        <Button variant='outline-success' onClick={onHide}>Добавить бренд</Button>
+        <Button variant='outline-danger' onClick={() => cancel()}>Отмена</Button>
+        <Button
+          variant='outline-success'
+          onClick={() => create('brand', brand, onHide)}
+        >Добавить бренд</Button>
       </Modal.Footer>
     </Modal>
   )

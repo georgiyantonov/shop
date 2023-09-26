@@ -7,17 +7,17 @@ import ApiError from "../error/apiError.js"
 export default class DeviceController {
     async create(req, res, next) {
         try {
-            const {name, price, brandId, typeId, info} = req.body
+            const {name, price, brandId, typeId, info, rating} = req.body
             const {img} = req.files
             let fileName = uuid.v4() + ".jpg"
             const __filename = fileURLToPath(import.meta.url)
             const __dirname = path.dirname(__filename)
-            img.mv(path.resolve(__dirname, "..", 'static', fileName))
+            await img.mv(path.resolve(__dirname, "..", 'static', fileName))
 
-            const device = await Device.create({name, price, brandId, typeId, img: fileName})
+            const device = await Device.create({name, price, brandId, typeId, img: fileName, rating})
             if(info) {
-                info = JSON.parse(info)
-                DeviceInfo.forEach(i => 
+                const inf = JSON.parse(info)
+                inf.forEach(i =>
                     DeviceInfo.create({
                         title: i.title,
                         description: i.description,
@@ -33,22 +33,50 @@ export default class DeviceController {
     }
 
     async getAll(req, res) {
-        let {brandId, typeId, limit, page} = req.query
+        let {brandId, typeId, limit, page, sort} = req.query
         page = page || 1
-        limit = limit || 10
+        limit = limit || 12
         let offset = page * limit - limit
         let devices
+        let sortOrder
+        let sortType
+        switch (sort){
+            case 'name':
+                sortOrder = 'name'
+                sortType = 'ASC'
+                break
+            case 'priceasc':
+                sortOrder = 'price'
+                sortType = 'ASC'
+                break
+            case 'pricedesc':
+                sortOrder = 'price'
+                sortType = 'DESC'
+                break
+            case 'ratingasc':
+                sortOrder = 'rating'
+                sortType = 'ASC'
+                break
+            case 'ratingdesc' :
+                sortOrder = 'rating'
+                sortType = 'DESC'
+                break
+            default:
+                sortOrder = 'rating'
+                sortType = 'DESC'
+                break
+        }
         if (!brandId && !typeId) {
-            devices = await Device.findAndCountAll({limit, offset})
+            devices = await Device.findAndCountAll({limit, offset, order: [[sortOrder, sortType]]})
         }
         if (brandId && !typeId) {
-            devices = await Device.findAndCountAll({where:{brandId}, limit, offset})
+            devices = await Device.findAndCountAll({where:{brandId}, limit, offset, order: [[sortOrder, sortType]]})
         }
         if (!brandId && typeId) {
-            devices = await Device.findAndCountAll({where:{typeId}, limit, offset})
+            devices = await Device.findAndCountAll({where:{typeId}, limit, offset, order: [[sortOrder, sortType]]})
         }
         if (brandId && typeId) {
-            devices = await Device.findAndCountAll({where:{brandId, typeId}, limit, offset})
+            devices = await Device.findAndCountAll({where:{brandId, typeId}, limit, offset, order: [[sortOrder, sortType]]})
         }
         return res.json(devices)
     }
@@ -61,6 +89,9 @@ export default class DeviceController {
                 include: [{model: DeviceInfo, as: 'info'}]
             }
         )
+        if(device === null) {
+            res.statusCode = 404
+        }
         return res.json(device)
     }
 }

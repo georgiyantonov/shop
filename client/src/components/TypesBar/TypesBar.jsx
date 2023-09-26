@@ -9,6 +9,10 @@ export const TypesBar = observer(() => {
 
   return (
     <ListGroup>
+      <ListGroup.Item
+        active={device.selectedType.id === undefined}
+        onClick={() => device.setSelectedType({})}
+      >Все типы</ListGroup.Item>
       {device.types.map(type => 
         <ListGroup.Item 
           active={type.id === device.selectedType.id}

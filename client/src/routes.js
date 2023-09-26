@@ -1,15 +1,17 @@
 import Admin from './pages/Admin'
 import Auth from './pages/Auth'
-import Shop from './pages/Shop'
+import { Shop } from './pages/Shop'
 import Basket from './pages/Basket'
 import DevicePage from './pages/DevicePage'
 import { ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from './utils/consts'
 
-export const authRoutes = [
+export const secretRoutes = [
   {
     path: ADMIN_ROUTE,
     Component: Admin
   },
+]
+export const authRoutes = [
   {
     path: BASKET_ROUTE,
     Component: Basket

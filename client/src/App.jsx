@@ -1,28 +1,18 @@
 import { BrowserRouter } from "react-router-dom";
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { AppRouter } from "./components/AppRouter";
 import { NavBar } from "./components/NavBar/NavBar";
 import { observer } from "mobx-react-lite";
 import { Context } from ".";
-import { check } from "./fetch/userAPI";
 import { Spinner } from "react-bootstrap";
+import useCheck from "./hooks/useCheck";
 
 
 const App = observer(() => {
   const {user} = useContext(Context)
-  const [loading, setLoading] = useState(true)
+  let isLoader = useCheck(user)
 
-  useEffect(() => {
-    check()
-      .then(data => {
-        user.setUser(true)
-        user.setIsAuth(true)
-      }).finally(() => {
-        setLoading(false)
-      })
-  }, [])
-
-  if(loading) {
+  if(isLoader) {
     return (
       <Spinner className='position-fixed top-50 start-50' animation="grow"></Spinner>
     )

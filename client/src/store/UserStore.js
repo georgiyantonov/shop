@@ -24,7 +24,7 @@ export default class UserStore {
   get user() {
     return this._user
   }
-  get admin() {
+  get isAdmin() {
     return this._isAdmin
   }
 }

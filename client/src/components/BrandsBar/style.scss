@@ -1,3 +1,18 @@
-.card {
-  cursor: pointer;
+.swiper {
+  position: relative;
+  &-slide {
+    border-radius: 12px;
+    border: 1px solid #000;
+    transition: all .3s ease-in;
+    cursor: grab;
+    &-active {
+      border: 1px solid #347ea1;
+    }
+
+    &:hover {
+      color: white;
+      background: black;
+      transition: all .3s ease-in;
+    }
+  }
 }

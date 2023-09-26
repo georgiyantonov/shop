@@ -1,55 +1,17 @@
-import {makeAutoObservable} from 'mobx'
+import {runInAction, makeAutoObservable} from 'mobx'
 
 export default class DeviceStore {
   constructor() {
-    this._types = [
-      {
-        id: 1,
-        name: "Смартфоны"
-      },
-      {
-        id: 2,
-        name: "Планшеты"
-      },
-      {
-        id: 3,
-        name: "Смарт-часы"
-      },
-      {
-        id: 4,
-        name: "Наушники"
-      }
-    ]
-
-    this._brands = [
-      {
-        id: 1,
-        name: "Apple"
-      },
-      {
-        id: 2,
-        name: "Samsung"
-      },
-      {
-        id: 3,
-        name: "Huawei"
-      },
-      {
-        id: 4,
-        name: "Xiaomi"
-      }
-    ]
-
-    this._devices = [
-      {id: 1, name: 'iPhone 12 Pro', price: 50000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/eb6/ruru_iphone12pro_q121_gold_pdp-image-1b.jpg/resize/453x480/'},
-      {id: 2, name: 'iPhone 12 Pro Max', price: 70000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/2c3/ruru_iphone12promax_q121_pacificblue_pdp-image-1b.jpg/resize/453x480/'},
-      {id: 3, name: 'iPhone 13 Pro Max', price: 125000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/24e/iphone_13_pro_max_q421_sierra_blue_pdp_image_position-1a__ru-ru.jpg/resize/453x480/'},
-      {id: 4, name: 'Samsung Galaxy S23 Ultra', price: 159000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/b00/b009d462d6a809b854dacdfdbc0aaf8a.jpg/resize/453x480/'},
-      {id: 5, name: 'Samsung Galaxy Z Fold4', price: 130000, rating: 5, img: 'https://cdn.svyaznoy.ru/upload/iblock/f87/f87293f2b786e9cc91a9c71e5dffc07a.jpg/resize/453x480/'}
-    ]
-
+    this._types = []
+    this._brands = []
+    this._devices = []
     this._selectedType = {}
     this._selectedBrand = {}
+    this._page = 1
+    this._totalCount = 0
+    this._sort = ''
+    this._limit = 12
+    this._loading = true
     makeAutoObservable(this)
   }
 
@@ -63,10 +25,36 @@ export default class DeviceStore {
     this._devices = devices
   }
   setSelectedType(type) {
-    this._selectedType = type
+    runInAction(() => {
+      this.setPage(1)
+      this._selectedType= type
+    })
   }
   setSelectedBrand(brand) {
-    this._selectedBrand = brand
+    runInAction(() => {
+      this.setPage(1)
+      this._selectedBrand = brand
+    })
+    
+  }
+  setPage(page) {
+    this._page = page
+  }
+  setTotalCount(count) {
+    this._totalCount = count
+  }
+  setLoading(bool) {
+    runInAction(() => {
+      this._loading = bool
+    })
+  }
+  
+  setSort(sort) {
+    this._sort = sort
+  }
+  
+  setLimit(limit) {
+    this._limit = limit
   }
 
   get types() {
@@ -83,5 +71,20 @@ export default class DeviceStore {
   }
   get selectedBrand() {
     return this._selectedBrand
+  }
+  get page() {
+    return this._page
+  }
+  get totalCount() {
+    return this._totalCount
+  }
+  get limit() {
+    return this._limit
+  }
+  get loading() {
+    return this._loading
+  }
+  get sort() {
+    return this._sort
   }
 }

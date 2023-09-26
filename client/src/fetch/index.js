@@ -15,6 +15,21 @@ const authInterceptor = config => {
 
 $authHost.interceptors.request.use(authInterceptor)
 
+$authHost.interceptors.response.use(response => {
+  return response
+  }, error => {
+    if(error.response.status === 401){
+      return Promise.reject(error)
+    } else {
+      throw error
+    }
+})
+$host.interceptors.response.use(response => {
+  return response
+  }, error => {
+    throw error
+})
+
 export {
   $authHost,
   $host
