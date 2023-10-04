@@ -1,0 +1,70 @@
+version: "3.8"
+services:
+  shopdb:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: Asdfr678
+      POSTGRES_USER: postgres
+      POSTGRES_DB: shop
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - shopdb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d shop" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+    networks:
+      - postgres
+  server:
+    build: server/
+    command: npm start
+    volumes:
+      - /home/georgiy/web/shop/server:/server
+    ports:
+      - 5000:5000
+    depends_on:
+      - shopdb
+    networks:
+      - postgres
+  client:
+    build: client/
+    command: npm start
+    volumes:
+      - /home/georgiy/web/shop/client:/client
+    ports:
+      - 3000:3000
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:7.2
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@test.ru"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres
+
+volumes:
+  shopdb-data:
+  pgadmin-data:
+
+networks:
+  postgres:
+    driver: bridge
