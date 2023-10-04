@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: docker-compose up
+        run: docker-compose --compatibility up
 
   # Deployment job
   deploy:
