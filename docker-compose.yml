@@ -20,7 +20,7 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 4G
+          memory: 2G
     networks:
       - postgres
   server:
@@ -57,7 +57,7 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 4G
+          memory: 2G
     networks:
       - postgres
 
