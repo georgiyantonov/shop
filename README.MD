@@ -1,7 +1,18 @@
 # PERN Shop project
 
-## Usage:
+## Usage with docker:
+1. Clone repository
+2. Create local docker image with <code>docker-compose build shopdb server client pgadmin
+   </code>
+3. Start docker container with <code>docker-compose up</code>
 
+Front will be available on <code>http://localhost/ </code>
+
+API will be available on <code>http://localhost:5000/ </code>
+
+PGAdmin will be available on <code>http://localhost:5050/browser/ </code>
+
+## Usage locally:
 1. Clone repository
 2. Install PSQL
 3. Create PSQL database in pgAdmin
