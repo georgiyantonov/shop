@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /server
+WORKDIR ./server
 COPY . .
 RUN npm install
 
