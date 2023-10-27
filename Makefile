@@ -3,5 +3,5 @@ run:
 stop:
 	docker-compose down
 deletecontainers:
-	docker rm shop-server-1
-	docker rm shop-client-2
+	docker rm shop-server
+	docker rm shop-client
