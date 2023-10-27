@@ -17,7 +17,7 @@ export const NavBar = observer(() => {
       <Container>
         <Navbar.Brand>
           <Link to={SHOP_ROUTE}>
-            Магазин
+            Магазин1
           </Link>
         </Navbar.Brand>
         {user.isAuth ?

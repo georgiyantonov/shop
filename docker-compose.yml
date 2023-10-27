@@ -27,7 +27,7 @@ services:
     build: server/
     command: npm start
     volumes:
-      - /home/georgiy/web/shop/server:/server
+      - ./server:/server
     ports:
       - 5000:5000
     depends_on:
@@ -39,6 +39,8 @@ services:
     command: npm start
     ports:
       - 80:3000
+    volumes:
+      - ./client:/client
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4:7.2

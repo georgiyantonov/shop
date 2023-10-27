@@ -2,8 +2,7 @@
 
 ## Usage with docker:
 1. Clone repository
-2. Create local docker image with <code>docker-compose build shopdb server client pgadmin
-   </code>
+2. Create local docker image with <code>docker-compose build</code>
 3. Start docker container with <code>docker-compose up</code>
 
 Front will be available on <code>http://localhost/ </code>
